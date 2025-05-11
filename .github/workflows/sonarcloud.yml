@@ -1,0 +1,37 @@
+name: SonarCloud Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build and Analyze
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v1.3.1
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x' # adjust as needed
+
+      - name: Restore NuGet packages
+        run: nuget restore YourProject.sln
+
+      - name: Build the solution
+        run: msbuild https://github.com/BZN-SWATI-KOLEKAR/002TN0068/blob/master/002TN0068.sln /p:Configuration=Release
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          organization: BZN-SWATI-KOLEKAR
+          projectKey: BZN-SWATI-KOLEKAR
+          token: ${{ secrets.SONAR_TOKEN }}
