@@ -27,7 +27,7 @@ jobs:
         run: nuget restore YourProject.sln
 
       - name: Build the solution
-        run: msbuild https://github.com/BZN-SWATI-KOLEKAR/002TN0068/blob/master/002TN0068.sln /p:Configuration=Release
+        run: msbuild https://github.com/BZN-SWATI-KOLEKAR/002TN0068/blob/master/002TN0068.sln
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
